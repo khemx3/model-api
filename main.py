@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, request
 from model import model
+import os
 
 
 ml_model = model(20, 12)
 ml_model.restore_model("models/model_10_weights")
 
 app = Flask(__name__)
+port = int(os.environ.get("PORT", 8000))
 
 @app.route('/')
 def hello_world():
@@ -27,4 +29,4 @@ def generatemodel():
 
 if __name__ == "__main__":
     # Only for debugging while developing
-    app.run(host='0.0.0.0', debug=True, port=8000)
+    app.run(host='0.0.0.0', debug=True, port=port)

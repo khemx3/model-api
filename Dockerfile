@@ -2,13 +2,11 @@ FROM python:3.6-slim
 
 COPY ./requirements.txt /app/requirements.txt
 
-WORKDIR /app
-
 COPY . /app
 
-RUN pip install -r requirements.txt
+WORKDIR /app
 
-EXPOSE 8000
+RUN pip install -r requirements.txt
 
 ENTRYPOINT ["python"]
 
