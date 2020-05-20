@@ -10,6 +10,4 @@ COPY . /app
 
 EXPOSE 8000
 
-ENTRYPOINT ["python"]
-
-CMD ["app/main.py"]
+CMD ["python", "main.py"]
