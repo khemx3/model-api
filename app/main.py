@@ -7,6 +7,9 @@ ml_model.restore_model("app/models/model_10_weights")
 
 app = Flask(__name__)
 
+@app.route('/')
+def hello_world():
+    return 'Flask Dockerized and deployed to Heroku'
 
 @app.route("/model", methods=['POST'])
 def generatemodel():
