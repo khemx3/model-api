@@ -3,7 +3,7 @@ from model import model
 
 
 ml_model = model(20, 12)
-ml_model.restore_model("app/models/model_10_weights")
+ml_model.restore_model("models/model_10_weights")
 
 app = Flask(__name__)
 
