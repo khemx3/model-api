@@ -1,9 +1,11 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from keras.layers import Dense
 import numpy as np
 import pandas as pd
 from keras import backend as K
 import random
+
+tf.disable_eager_execution()
 
 
 class model:
@@ -51,17 +53,17 @@ class model:
         self.learning_rate = tf.placeholder(tf.float32, shape=[])
 
         # The optimizer is gradient descent
-        self.train = tf.compat.v1.train.GradientDescentOptimizer(learning_rate=self.learning_rate).minimize(self.loss)
+        self.train = tf.train.GradientDescentOptimizer(learning_rate=self.learning_rate).minimize(self.loss)
 
         # Initialize the session
-        self.sess = tf.compat.v1.Session()
+        self.sess = tf.Session()
 
         K.set_session(self.sess)
         # Used to save and restore the model
-        self.saver = tf.compat.v1.train.Saver ()
+        self.saver = tf.train.Saver ()
 
         # Initialize all tensorflow variables
-        self.sess.run(tf.compat.v1.global_variables_initializer())
+        self.sess.run(tf.global_variables_initializer())
 
     # Predict a pattern given an input
     def predict_pattern(self, input_layer):
