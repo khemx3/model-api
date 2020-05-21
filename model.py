@@ -135,6 +135,7 @@ class model:
 
     # Prepares the data in order to predict its pattern
     def prepare_prediction_data(self, pattern):
+        self.normalize_pattern(pattern)
         self.add_complements(pattern)
         pattern = [pattern]
         return pattern
