@@ -9,8 +9,9 @@ ml_model.restore_model("models/model_10_weights")
 
 app = Flask(__name__)
 port = int(os.environ.get("PORT", 8000))
+ 
 
-cred = credentials.Certificate('key.json')
+cred = credentials.Certificate(Buffer.from(process.env.FIREBASE_CONFIG_BASE64, 'base64').toString('ascii')))
 default_app = initialize_app(cred)
 db = firestore.client()
 stock_ref = db.collection('stock')
@@ -36,15 +37,6 @@ def generatemodel():
 def generatebacktest():
     return 'Generating Backtest'
 
-# @app.route('/backtest', methods=['PUT', 'POST'])
-# def create():
-#     try:
-#         name = request.json['name']
-#         stock_ref.document(name).set(request.json)
-    
-#         return jsonify({"success": True}), 200
-#     except Exception as e:
-#         return f"An Error Occured: {e}"
 
 @app.route('/backtest/<name>', methods=['GET'])
 def read(name):
