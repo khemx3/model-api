@@ -17,10 +17,12 @@ def backtrack(name):
             max_index = np.argmax(pattern[0].tolist())
             percentage = pattern[0].tolist()[max_index] * 100
             if(percentage >= 90):
+      
                 json_line.append({
-                    'index':number, 
+                    'index':number - 9, 
                     'pattern':int(max_index)+1, 
-                    'percentage':percentage
+                    'percentage':percentage,
+                    'point':lis[1:]
                 })
             
             
