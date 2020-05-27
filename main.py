@@ -1,13 +1,11 @@
 from flask import Flask, jsonify, request
 from firebase_admin import credentials, firestore, initialize_app
-from model import model
+
+from backtrack import backtrack, model_input
 from dotenv import load_dotenv
 import os
+import json
 
-
-
-ml_model = model(20, 12)
-ml_model.restore_model("models/model_10_weights")
 
 app = Flask(__name__)
 port = int(os.environ.get("PORT", 8000))
@@ -42,8 +40,7 @@ def hello_world():
 def generatemodel():
     data = request.get_json()
     inputVal = data["input"][:]
-    input_window = ml_model.prepare_prediction_data(data["input"])
-    pattern = ml_model.predict_pattern(input_window)
+    pattern = model_input(inputVal)
 
     return jsonify(
         name=data["name"],
@@ -51,9 +48,21 @@ def generatemodel():
         output=pattern[0].tolist()
     )
 
-@app.route('/backtest/run', methods=['GET'])
-def generatebacktest():
-    return 'Generating Backtest'
+@app.route('/backtest/run/<name>', methods=['GET'])
+def generatebacktest(name):
+    try:
+        with open('data.json') as json_file:
+            datajson = json.load(json_file)
+        stock_ref.document(name).set({
+                u'data':datajson[0]["data"]["intervals"],
+                u'label':backtrack(name),
+                u'name':name
+            }
+        )
+        return name + "successful run"
+    except Exception as e:
+        return f"An Error Occured: {e}"
+    
 
 
 @app.route('/backtest/<name>', methods=['GET'])
