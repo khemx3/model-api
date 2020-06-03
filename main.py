@@ -51,15 +51,14 @@ def generatemodel():
 @app.route('/backtest/run/<name>', methods=['GET'])
 def generatebacktest(name):
     try:
-        with open('data.json') as json_file:
-            datajson = json.load(json_file)
+        temp = backtrack(name)
         stock_ref.document(name).set({
-                u'data':datajson[0]["data"]["intervals"],
-                u'label':backtrack(name),
+                u'data':temp[1],
+                u'label':temp[0],
                 u'name':name
             }
         )
-        return name + "successful run"
+        return name
     except Exception as e:
         return f"An Error Occured: {e}"
     

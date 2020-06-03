@@ -5,15 +5,13 @@ import csv
 
 class dataTool:
     def __init__(self, name):
+
+        self.url = "https://stormy-mesa-57066.herokuapp.com/"
+        self.data = requests.get(self.url + name + "?timeframe=1d&range=500")
+        self.data_close = self.data.json()[0]['data']['intervals']
         
-        with open('data.json') as json_file:
-            self.data = json.load(json_file)
-
-        # self.url = ""
-        # self.data = requests.get(self.url + name)
-        self.data_close = self.data[0]['data']['intervals']
-
-
+    def get_data_close(self):
+        return self.data_close
 
     def iterate_patterns(self):
         data = []
@@ -28,4 +26,3 @@ class dataTool:
         for i in range(index + 1, index + 10):
             json_line.append(self.data_close[i]['last'])
         return json_line
-
