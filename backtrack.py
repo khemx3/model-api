@@ -8,7 +8,8 @@ ml_model.restore_model("models/model_10_weights")
 
 def backtrack(name):
         json_line = []
-        lists = dataTool(name).iterate_patterns()
+        temp = dataTool(name)
+        lists = temp.iterate_patterns()
 
         for lis in lists[:]:
             number = lis[0]
@@ -23,10 +24,9 @@ def backtrack(name):
                     'pattern':int(max_index)+1, 
                     'percentage':percentage,
                     'point':lis[1:]
-                })
+                })       
             
-            
-        return json_line
+        return json_line, temp.get_data_close()
 def model_input(data):
     input_window = ml_model.prepare_prediction_data(data)
     pattern = ml_model.predict_pattern(input_window)
